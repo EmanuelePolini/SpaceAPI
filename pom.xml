@@ -7,12 +7,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>it.edu.marconipontedera.tepsit</groupId>
-  <artifactId>hello-rest</artifactId>
+  <artifactId>SpaceAPI</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
 
   <name>00 - Maven e Web in Java</name>
-  <url>https://github.com/kismet/teaching/tree/main/tepsit</url>
+  <url>https://github.com/EmanuelePolini/SpaceAPI</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -50,11 +50,17 @@
       <artifactId>jersey-media-moxy</artifactId>
       <version>2.23.2</version>
     </dependency>
+    
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.9.10</version>
+	</dependency>
 
   </dependencies>
 
   <build>
-    <finalName>hello-rest</finalName>
+    <finalName>SpaceAPI</finalName>
 
     <plugins>
 
