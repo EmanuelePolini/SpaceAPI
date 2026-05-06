@@ -5,8 +5,8 @@ package model;
 public class VoyagerData {
 	private String name;
 	private int yearsInSpace;
-	private double velocitaKmS;
-	private double distanzaUA;
+	private double speedKmS;
+	private double distanceUA;
 	
 	public void setName(String name) {
 		this.name = name;
@@ -16,27 +16,27 @@ public class VoyagerData {
 		this.yearsInSpace = yearsInSpace;
 	}
 	
-	public void setVelocitaKmS(double velocitaKmS) {
-		this.velocitaKmS = velocitaKmS;
+	public void setSpeedKmS(double speedKmS) {
+		this.speedKmS = speedKmS;
 	}
 	
-	public void setDistanzaUA(double distanzaUA) {
-		this.distanzaUA = distanzaUA;
+	public void setDistanceUA(double distanceUA) {
+		this.distanceUA = distanceUA;
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
-	public int getYears() {
+	public int getYearsInSpace() {
 		return yearsInSpace;
 	}
 	
-	public double getVelocitaKmS() {
-		return velocitaKmS;
+	public double getSpeedKmS() {
+		return speedKmS;
 	}
 	
-	public double getDistanzaUA() {
-		return distanzaUA;
+	public double getDistanceUA() {
+		return distanceUA;
 	}
 }
