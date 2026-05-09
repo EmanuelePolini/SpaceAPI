@@ -9,71 +9,40 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.time.LocalDate;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 import model.VoyagerData;
+import utils.UnitConverter;
+import utils.TimeUtils;
+
+import client.NasaClient;
 
 public class VoyagerService {
 	
-	private String callNasaApi() {
-		String urlString = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY";
-		String jsondata = "";
-		
-		try {
-			
-			@SuppressWarnings("deprecation")
-			URL url = new URL(urlString);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			
-			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			String output="";
-			
-			while((output = reader.readLine()) != null) {
-				jsondata += output;
-			}
-			
-			reader.close();
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return jsondata;
-	}
-	
 	public VoyagerData getVoyagerData() {
 		
-		/********************************CALCOLO DISTANZA ANNI LUCE****************************************************/
-		
-		//data di lancio voyager 1 (5 settembre 1977)
+		//data di lancio v1
 		LocalDate launchDate = LocalDate.of(1977, 9, 5);
 		
-		//calcoliamo i giorni trascorsi (sottrae i giorni che si contano ad oggi e i giorni che si contavano al lancio)
-		long daysInSpace = ChronoUnit.DAYS.between(launchDate, LocalDate.now());
-		
-		//effettuiamo la conversione in secondi
-		long secondsInSpace = daysInSpace * 24 * 60 * 60;
+		/********************************CALCOLO DISTANZA AU****************************************************/
 		
 		//voyager 1 viaggia a circa 17 km/s
 		double speedKmS = 17;
 		
+		double seconds = TimeUtils.calculateDaysSinceLaunch(launchDate) * 24 * 60 *60;
+		
 		//calcoliamo quindi applicando la formula fisica distanza = velocita * tempo
-		double distanceKm = speedKmS * secondsInSpace;
+		double distanceKm = speedKmS * seconds;
 		
-		//km effettivi di una unità astronomica (AU)
-		final double AU = 149597870.7;
+		//calcolo distanza percorsa in unità astronomiche (AU)
+		double distanceAu = UnitConverter.kmToAu(distanceKm);
 		
-		//conversione distanza da km a AU
-		double distanceAu = distanceKm / AU;
+		//anni trascorsi dal lancio
+		int years = (int) TimeUtils.calculateYearsSinceLaunch(launchDate);
 		
 		/**************************************************************************************/
 		
-		int currentYear = LocalDate.now().getYear();
-		int years = currentYear - 1977;
-		
-		String nasaData = callNasaApi();
+		NasaClient client = new NasaClient();
+		String nasaData = client.callApi();
 		
 		String title = "";
 		String date = "";
