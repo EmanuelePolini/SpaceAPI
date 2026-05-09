@@ -8,40 +8,17 @@ import java.net.URL;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import client.NasaClient;
+import client.OpenNotifyClient;
 import model.ISSLocation;
 
 public class ISSService {
 	
-	private String callISSApi() {
-		String urlString = "http://api.open-notify.org/iss-now.json";
-		String jsondata = "";
-		
-		try {
-			URL url = new URL(urlString);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			
-			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			String output="";
-			
-			while((output = reader.readLine()) != null) {
-				jsondata += output;
-			}
-			
-			reader.close();
-			
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return jsondata;
-	}
-	
-	
 	public ISSLocation getISSLocation() {
 		
-		String ISSData = callISSApi();
+		OpenNotifyClient client = new OpenNotifyClient();
+		
+		String ISSData = client.callISSApi();
 		
 		String latitude = "";
 		String longitude = "";
