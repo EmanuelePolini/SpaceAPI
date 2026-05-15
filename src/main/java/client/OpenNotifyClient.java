@@ -5,14 +5,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class NasaClient {
-	public String callApi() {
-		String urlString = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY";
+public class OpenNotifyClient {
+	public String callISSApi() {
+		String urlString = "http://api.open-notify.org/iss-now.json";
 		String jsondata = "";
 		
 		try {
-			
-			@SuppressWarnings("deprecation")
 			URL url = new URL(urlString);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
@@ -26,10 +24,20 @@ public class NasaClient {
 			
 			reader.close();
 			
-		} catch(Exception e) {
+			
+		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		
 		return jsondata;
 	}
 }
+
+
+
+
+
+
+
+
+
